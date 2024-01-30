@@ -11,6 +11,7 @@ public:
   ~Proposer();
 
 private:
+  // need a mapping of all nodes in view
   struct proposal_round;
   int prepare(struct proposal_round);
   int accept(struct proposal_round, char *value);
