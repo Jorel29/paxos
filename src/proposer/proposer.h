@@ -1,6 +1,11 @@
 #ifndef PROPOSER_H
 #define PROPOSER_H
 
+typedef struct {
+  int proposal;
+  int id;
+} proposal_round;
+
 class Proposer {
 public:
   Proposer();
@@ -12,13 +17,8 @@ public:
 
 private:
   // need a mapping of all nodes in view
-  struct proposal_round;
-  int prepare(struct proposal_round);
-  int accept(struct proposal_round, char *value);
-  int read_promise();
-  int read_accepted();
-  int inc_prop_round(struct proposal_round);
-  int quorum_wait();
+  proposal_round m_proposal;
+  char *value;
 };
 
 #endif
