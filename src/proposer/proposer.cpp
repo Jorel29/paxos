@@ -8,7 +8,7 @@ Proposer::Proposer() {
   m_proposal.proposal = 0;
 }
 
-std::vector<std::string> split(std::string delim, std::string text) {
+static std::vector<std::string> split(std::string delim, std::string text) {
   std::vector<std::string> res;
   size_t pos = 0;
   size_t last = 0;
@@ -16,12 +16,18 @@ std::vector<std::string> split(std::string delim, std::string text) {
   while ((pos = text.find(delim, last)) != std::string::npos) {
     token = text.substr(last, pos - last);
     last = pos + delim.length();
+    res.push_back(token);
   }
+  token = text.substr(last);
+  res.push_back(token);
   return res;
 }
-
+// reads takes data from the buffer, updates proposal round and value if those
+// are returned from an acceptor
 int extract_data(char *&data, proposal_round &proposal, char *&value) {
   std::string temp(data);
+  std::string delim(":");
+  std::vector<std::string> result = split(delim, temp);
 
   return 0;
 }

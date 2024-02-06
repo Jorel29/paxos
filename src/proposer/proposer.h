@@ -18,7 +18,6 @@ public:
 private:
   // need a mapping of all nodes in view
   proposal_round m_proposal;
-  char *value;
 };
 
 #endif
