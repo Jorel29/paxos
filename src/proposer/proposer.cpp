@@ -1,4 +1,5 @@
 #include "proposer.h"
+#include <fstream>
 #include <string>
 #include <vector>
 // Need to decide on how errors are handled
@@ -44,12 +45,34 @@ int inc_proposal(proposal_round &proposal) {
 
   return 0;
 }
+// begin sending out messages to the known accecptors
+int start_proposal(proposal_round &proposal) {
+  // use the communication interface when its ready
+  // for now, write to dummy file
+  std::ofstream out;
+  out.open("proposal_out");
+
+  if (!out.fail())
+    out << proposal.id << " " << proposal.proposal;
+  out.close();
+
+  std::ifstream in;
+  in.open("proposal_in");
+  proposal_round acceptor;
+  while (!in.fail()) {
+    if (in >> acceptor.id) {
+      return 0;
+    }
+  }
+  return 0;
+}
+
 int prepare(proposal_round &proposal) {
   // choose a proposal number
   if (inc_proposal(proposal) == -1)
     return -1;
   // send a proposal to all the acceptors
-
+  start_proposal(proposal);
   // wait for a response from a majority of the acceptors
 
   // need to deal with being a lower proposal number than other proposers
@@ -64,5 +87,3 @@ int accept(proposal_round &proposal, char *value) {
 
   return 0;
 }
-int read_promise();
-int read_accepted();
