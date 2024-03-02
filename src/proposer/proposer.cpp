@@ -57,11 +57,17 @@ int start_proposal(proposal_round &proposal) {
   out.close();
 
   std::ifstream in;
+  std::string value;
+  char cstr_val[1000];
   in.open("proposal_in");
   proposal_round acceptor;
   while (!in.fail()) {
-    if (in >> acceptor.id) {
-      return 0;
+    if (in >> acceptor.id >> acceptor.proposal) {
+      in.getline(cstr_val, 1000, '\n');
+      value = cstr_val;
+    }
+    if (value != "nil" || acceptor.proposal < proposal.proposal) {
+      return -1;
     }
   }
   return 0;
@@ -82,7 +88,7 @@ int prepare(proposal_round &proposal) {
   // once finished, exit
   return 0;
 }
-int accept(proposal_round &proposal, char *value) {
+int accept(proposal_round &proposal, std::string value) {
   // send out an accept message and wait for responses
 
   return 0;
